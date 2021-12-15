@@ -1,8 +1,9 @@
 package models;
 
+import composite.Cursavel;
 import prototype.Prototipavel;
 
-public class Disciplina extends Produto{
+public class Disciplina extends Produto implements Cursavel {
 	
 	private int chTotal;
 	private double pcCumprido;

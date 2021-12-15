@@ -5,39 +5,40 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import composite.Cursavel;
 import observer.CheckpointListener;
 import prototype.Prototipavel;
 import state.CursoState;
 import state.EmAndamentoState;
 import state.OperacaoInvalida;
 
-public class Curso extends Produto{
+public class Curso extends Produto implements Cursavel {
 	
 	public class Situacao {
 		
 		private Curso curso;
-		private Map<String, Disciplina> disciplinas;
+		private Map<String, Cursavel> disciplinas;
 		
-		public Situacao(Curso curso, Map<String, Disciplina> disciplinas) {
+		public Situacao(Curso curso, Map<String, Cursavel> disciplinas) {
 			this.curso = curso;
-			this.disciplinas = new HashMap<String, Disciplina>();
+			this.disciplinas = new HashMap<String, Cursavel>();
 			for(String codigo : disciplinas.keySet())
 				this.disciplinas.put(codigo, 
-									 (Disciplina) disciplinas.get(codigo).prototipar());
+									 (Cursavel) ((Disciplina) disciplinas.get(codigo)).prototipar());
 		}
 		
 		public void restore() {
 			this.curso.disciplinas = this.disciplinas;
 		}
 		
-		public Map<String, Disciplina> getDisciplinas() {
+		public Map<String, Cursavel> getDisciplinas() {
 			return this.disciplinas;
 		}
 		
 	}
 	
 	
-	private Map<String, Disciplina> disciplinas;
+	private Map<String, Cursavel> disciplinas;
 	private List<Livro> livros;
 	private CursoState cursoState;
 	private List<CheckpointListener> checkpointListeners;
@@ -45,10 +46,10 @@ public class Curso extends Produto{
 	
 	private Curso(Curso curso) {
 		super(curso);
-		this.disciplinas = new HashMap<String, Disciplina>();
+		this.disciplinas = new HashMap<String, Cursavel>();
 		for(String codigo : curso.disciplinas.keySet())
 			this.disciplinas.put(codigo, 
-								 (Disciplina) curso.disciplinas.get(codigo).prototipar());
+								 (Cursavel) ((Disciplina) curso.disciplinas.get(codigo)).prototipar());
 		this.livros = new LinkedList<Livro>();
 		for(Livro l : curso.livros)
 			this.livros.add((Livro)l.prototipar());
@@ -60,7 +61,7 @@ public class Curso extends Produto{
 	
 	public Curso(String codigo, String nome) {
 		super(codigo, nome);
-		this.disciplinas = new HashMap<String, Disciplina>();
+		this.disciplinas = new HashMap<String, Cursavel>();
 		this.livros = new LinkedList<Livro>();
 		this.checkpointListeners = new LinkedList<CheckpointListener>();
 		this.cursoState = new EmAndamentoState();
@@ -70,7 +71,7 @@ public class Curso extends Produto{
 				 List<Disciplina> disciplinas,
 				 List<Livro> livros) {
 		super(codigo, nome);
-		this.disciplinas = new HashMap<String, Disciplina>();
+		this.disciplinas = new HashMap<String, Cursavel>();
 		for(Disciplina d : disciplinas)
 			this.disciplinas.put(d.getCodigo(), d);
 		this.livros = new LinkedList<Livro>(livros);
@@ -80,12 +81,25 @@ public class Curso extends Produto{
 	
 	@Override
 	public double getPreco() {
-		return 0;
+		double precoTotalCursaveis = 0.0;
+		double precoTotalLivros = 0.0;
+		
+		for(Cursavel cursavel: this.disciplinas.values()) {
+			precoTotalLivros += cursavel.getPreco();
+		}
+		precoTotalCursaveis -= precoTotalCursaveis * 0.2; // Aplicação do desconto de 20%
+		
+		for(Livro livro: this.livros) {
+			precoTotalLivros += livro.getPreco();
+		}
+		precoTotalLivros -= precoTotalLivros * 0.1; // Aplicação do desconto de 10%
+		
+		return precoTotalCursaveis + precoTotalLivros;
 	}
 	
 	public String toString() {
 		String rep =  "[Curso] "  + this.getCodigo() + "-" + this.getNome() + "\n"; 
-		for(Disciplina disciplina : this.disciplinas.values())
+		for(Cursavel disciplina : this.disciplinas.values())
 			rep = rep + disciplina + "\n";
 		return rep;
 	}
