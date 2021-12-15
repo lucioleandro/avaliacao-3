@@ -2,7 +2,8 @@ package state;
 
 import java.util.Map;
 
-import models.Disciplina;
+import composite.Cursavel;
+import models.Produto;
 
 public class ConcluidoState extends AbstractCursoState implements CursoState {
 
@@ -12,11 +13,11 @@ public class ConcluidoState extends AbstractCursoState implements CursoState {
 	}
 	
 	
-	public String emitirCertificado(String cod, String nome, Map<String, Disciplina> disciplinas) throws OperacaoInvalida{
+	public String emitirCertificado(String cod, String nome, Map<String, Cursavel> disciplinas) throws OperacaoInvalida{
 		String rep = "CERTIFICADO\n";
 		rep =  rep + "[Curso] "  + cod + "-" + nome + "\n"; 
-			for(Disciplina disciplina : disciplinas.values())
-				rep = rep + "\t[" + disciplina.getCodigo() + "] - "+ disciplina.getNome() + "\n";
+			for(Cursavel disciplina : disciplinas.values())
+				rep = rep + "\t[" + ((Produto) disciplina).getCodigo() + "] - "+ ((Produto) disciplina).getNome() + "\n";
 			return rep;	
 	};
 	

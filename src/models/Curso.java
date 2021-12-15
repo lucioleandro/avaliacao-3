@@ -97,6 +97,26 @@ public class Curso extends Produto implements Cursavel {
 		return precoTotalCursaveis + precoTotalLivros;
 	}
 	
+	@Override
+	public double getCHCumprida() {
+		double chCumprida = 0.0;
+		
+		for(Cursavel cursavel: this.disciplinas.values()) {
+			chCumprida += cursavel.getCHCumprida();
+		}
+		
+		return chCumprida;
+	}
+	
+	@Override
+	public double getPctCumprido() {
+		double pctCumprido = 0.0;
+		for(Cursavel cursavel: this.disciplinas.values()) {
+			pctCumprido += cursavel.getPctCumprido();
+		}
+		return pctCumprido;
+	}
+	
 	public String toString() {
 		String rep =  "[Curso] "  + this.getCodigo() + "-" + this.getNome() + "\n"; 
 		for(Cursavel disciplina : this.disciplinas.values())
