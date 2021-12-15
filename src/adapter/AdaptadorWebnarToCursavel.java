@@ -3,12 +3,12 @@ package adapter;
 import composite.Cursavel;
 
 //ADAPTADOR
-public class AdaptadorWebnarToDisciplina implements Cursavel {
+public class AdaptadorWebnarToCursavel implements Cursavel {
 	
 	// Adaptee
 	private WebnarIF webnar;
 	
-	public AdaptadorWebnarToDisciplina(WebnarIF webnar) {
+	public AdaptadorWebnarToCursavel(WebnarIF webnar) {
 		this.webnar = webnar;
 	}
 	
@@ -38,6 +38,5 @@ public class AdaptadorWebnarToDisciplina implements Cursavel {
 		}
 		return 0;
 	}
-	
 
 }
