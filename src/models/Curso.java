@@ -85,7 +85,7 @@ public class Curso extends Produto implements Cursavel {
 		double precoTotalLivros = 0.0;
 		
 		for(Cursavel cursavel: this.disciplinas.values()) {
-			precoTotalLivros += cursavel.getPreco();
+			precoTotalCursaveis += cursavel.getPreco();
 		}
 		precoTotalCursaveis -= precoTotalCursaveis * 0.2; // Aplicação do desconto de 20%
 		
