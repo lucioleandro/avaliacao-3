@@ -3,12 +3,12 @@ package decorator;
 import models.Livro;
 
 // Base decorator
-public abstract class CalculadorPrecoDecorator {
+public abstract class CalculadorPrecoLivroDecorator implements CalculadorPrecoLivro {
 	
 	// wrapee
-	protected CalculadorPrecoDecorator calculador;
+	protected CalculadorPrecoLivro calculador;
 	
-	public CalculadorPrecoDecorator(CalculadorPrecoDecorator calculador) {
+	public CalculadorPrecoLivroDecorator(CalculadorPrecoLivro calculador) {
 		this.calculador = calculador;
 	}
 	
@@ -21,5 +21,5 @@ public abstract class CalculadorPrecoDecorator {
 		return livro.getPreco();
 	}
 	
-	public abstract void calcularPreco(Livro livro);
+	public abstract double calcularPreco(Livro livro);
 }

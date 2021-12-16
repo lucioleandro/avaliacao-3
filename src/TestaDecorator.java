@@ -1,4 +1,4 @@
-import decorator.CalculadorPrecoDecorator;
+import decorator.CalculadorPrecoLivroDecorator;
 import decorator.CapaDuraDecorator;
 import decorator.ColoridoDecorator;
 import decorator.DigitalDecorator;
@@ -10,12 +10,12 @@ public class TestaDecorator {
 		Livro livro = new Livro(null, null, null, 100);
 
 		
-		CalculadorPrecoDecorator primeiroCaso = new DigitalDecorator(new ColoridoDecorator(null));
+		CalculadorPrecoLivroDecorator primeiroCaso = new DigitalDecorator(new ColoridoDecorator(new Livro(livro)));
 		System.out.println(primeiroCaso.efetuarCalculo(livro));
 
 		livro.setPreco(100);
 		
-		CalculadorPrecoDecorator segundoCaso = new CapaDuraDecorator(null);
+		CalculadorPrecoLivroDecorator segundoCaso = new CapaDuraDecorator(new Livro(livro));
 		System.out.println(segundoCaso.efetuarCalculo(livro));
 	}
 }

@@ -2,17 +2,18 @@ package decorator;
 
 import models.Livro;
 
-public class DigitalDecorator extends CalculadorPrecoDecorator {
+public class DigitalDecorator extends CalculadorPrecoLivroDecorator {
 
-	public DigitalDecorator(CalculadorPrecoDecorator calculador) {
+	public DigitalDecorator(CalculadorPrecoLivro calculador) {
 		super(calculador);
 	}
 
 	@Override
-	public void calcularPreco(Livro livro) {
+	public double calcularPreco(Livro livro) {
 		// desconto de 15% do valor referência
 		double valor = livro.getPreco() - livro.getPreco() * 0.15;
 		livro.setPreco(valor);
+		return livro.getPreco();
 	}
 
 }
