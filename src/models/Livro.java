@@ -1,8 +1,9 @@
 package models;
 
+import decorator.CalculadorPrecoLivro;
 import prototype.Prototipavel;
 
-public class Livro extends Produto{
+public class Livro extends Produto implements CalculadorPrecoLivro {
 	
 	private String isbn;
 	private double preco;
@@ -48,6 +49,11 @@ public class Livro extends Produto{
 	@Override
 	public Prototipavel prototipar() {
 		return new Livro(this);
+	}
+
+	@Override
+	public double calcularPreco(Livro livro) {
+		return this.preco;
 	}
 	
 	
