@@ -17,11 +17,6 @@ public class AdaptadorWebnarToCursavel implements Cursavel {
 		return this.webnar.getPrice();
 	}
 	
-	// Sobrecarga ao invés de sobrescrita pq o adaptee não precisa de parâmetro nesse caso.
-	public void avancar() {
-		this.webnar.play();
-	}
-	
 	public int getCHTotal() {
 		return Long.valueOf(this.webnar.getMinutes()).intValue();
 	}
@@ -37,6 +32,10 @@ public class AdaptadorWebnarToCursavel implements Cursavel {
 			return 100;
 		}
 		return 0;
+	}
+	
+	public void avancar() {
+		this.webnar.play();
 	}
 
 }
